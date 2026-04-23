@@ -100,18 +100,15 @@ export async function handleEditorChange(
   );
 
   if (!existingEntry) {
-    // No entry yet for this timeKey, so push a new one
     changes.push({
       timeKey: currentTimeKey,
-      w: wordsAdded || 0,
-      c: charsAdded || 0,
+      w: Math.max(0, wordsAdded),
+      c: Math.max(0, charsAdded),
     });
   } else {
-    // Entry exists, so update the word and char count
-    existingEntry.w += wordsAdded;
-    existingEntry.c += charsAdded;
+    existingEntry.w += Math.max(0, wordsAdded);
+    existingEntry.c += Math.max(0, charsAdded);
   }
-
   // WORKING ON UPDATING JUST TODAY!!!
   state.emit(EVENTS.REFRESH_EVERYTHING);
 
